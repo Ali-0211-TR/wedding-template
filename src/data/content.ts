@@ -53,25 +53,25 @@ interface WeddingContent {
   }
 }
 
-export const weddingDateIso = '2026-04-03T17:00:00+05:00'
+export const weddingDateIso = '2026-04-03T18:00:00+05:00'
 export const mapEmbedUrl =
-  'https://www.google.com/maps?q=Hilton%20Tashkent%20City&z=15&output=embed'
+  'https://maps.app.goo.gl/iKpZJpydjRaYxvYY7'
 export const mapDirectionsUrl =
-  'https://www.google.com/maps/search/?api=1&query=Hilton%20Tashkent%20City'
+  'https://maps.app.goo.gl/iKpZJpydjRaYxvYY7'
 
 export const translations: Record<Language, WeddingContent> = {
   ru: {
     meta: {
-      title: 'Азиз и Лайло — Свадьба 3 апреля 2026',
-      description: 'Приглашение на свадьбу Азиза и Лайло, 3 апреля 2026, Hilton Tashkent City.',
+      title: 'Озоджон и Аминабону — Свадьба 3 апреля 2026',
+      description: 'Приглашение на свадьбу Озоджона и Аминабону, 3 апреля 2026, Ресторан Багишамал.',
     },
     controls: { musicOn: 'Музыка вкл.', musicOff: 'Музыка' },
-    preloader: { label: 'Азиз & Лайло', sublabel: '3 апреля 2026' },
+    preloader: { label: 'Озоджон & Аминабону', sublabel: '3 апреля 2026' },
     hero: {
-      groomName: 'Азиз',
-      brideName: 'Лайло',
+      groomName: 'Озоджон',
+      brideName: 'Аминабону',
       weddingDay: 'Wedding Day',
-      date: '3 апреля 2026 · пятница · 17:00',
+      date: '03.04.2026 · пятница · 18:00',
       scrollHint: 'Листать',
     },
     invitation: {
@@ -91,8 +91,8 @@ export const translations: Record<Language, WeddingContent> = {
     },
     venue: {
       eyebrow: 'Место проведения',
-      name: 'Hilton Tashkent City',
-      address: 'Улица Укчи, 1, Ташкент',
+      name: 'Ресторан Багишамал',
+      address: 'Ташкент',
       openMap: 'Карта',
       note: 'Просим прибыть за 20 минут до начала',
     },
@@ -100,11 +100,11 @@ export const translations: Record<Language, WeddingContent> = {
       eyebrow: 'Программа вечера',
       title: 'Расписание',
       items: [
-        { time: '17:00', title: 'Сбор гостей' },
-        { time: '17:30', title: 'Начало торжества' },
-        { time: '20:15', title: 'Свадебный вальс' },
-        { time: '21:30', title: 'Свадебный торт' },
-        { time: '22:00', title: 'Завершение' },
+        { time: '18:00', title: 'Сбор гостей' },
+        { time: '18:30', title: 'Начало торжества' },
+        { time: '21:15', title: 'Свадебный вальс' },
+        { time: '22:30', title: 'Свадебный торт' },
+        { time: '23:00', title: 'Завершение' },
       ],
     },
     dresscode: {
@@ -114,8 +114,8 @@ export const translations: Record<Language, WeddingContent> = {
         'Рекомендуем оттенки пудры, шампани, шалфея и мягкие нейтральные тона. Приходите в нарядной одежде, которая подчеркнёт весеннее настроение вечера. Мы будем рады видеть вас улыбчивыми и полными любви.',
     },
     countdown: {
-      groomName: 'Азиз',
-      brideName: 'Лайло',
+      groomName: 'Озоджон',
+      brideName: 'Аминабону',
       untilLabel: 'До встречи через',
       completedLabel: 'Этот день настал!',
       units: { days: 'дней', hours: 'часов', minutes: 'минут', seconds: 'секунд' },
@@ -124,16 +124,16 @@ export const translations: Record<Language, WeddingContent> = {
 
   uz: {
     meta: {
-      title: "Aziz va Laylo — To'y 3-aprel 2026",
-      description: "Aziz va Layloning to'y taklifnomasi, 2026-yil 3-aprel, Hilton Tashkent City.",
+      title: "Ozodjon va Aminabonu — To'y 3-aprel 2026",
+      description: "Ozodjon va Aminabonuning to'y taklifnomasi, 2026-yil 3-aprel, Restaran Bogishamol.",
     },
     controls: { musicOn: 'Musiqa yoq.', musicOff: 'Musiqa' },
-    preloader: { label: 'Aziz & Laylo', sublabel: '2026-yil 3-aprel' },
+    preloader: { label: 'Ozodjon & Aminabonu', sublabel: '2026-yil 3-aprel' },
     hero: {
-      groomName: 'Aziz',
-      brideName: 'Laylo',
+      groomName: 'Ozodjon',
+      brideName: 'Aminabonu',
       weddingDay: 'Wedding Day',
-      date: '2026-yil 3-aprel · juma · 17:00',
+      date: '03.04.2026 · juma · 18:00',
       scrollHint: 'Pastga',
     },
     invitation: {
@@ -153,8 +153,8 @@ export const translations: Record<Language, WeddingContent> = {
     },
     venue: {
       eyebrow: 'Joyi',
-      name: 'Hilton Tashkent City',
-      address: "Ukchi ko'chasi 1-uy, Toshkent",
+      name: 'Restaran Bogishamol',
+      address: 'Toshkent',
       openMap: 'Xarita',
       note: '20 daqiqa oldin tashrif buyuring',
     },
@@ -162,11 +162,11 @@ export const translations: Record<Language, WeddingContent> = {
       eyebrow: 'Kecha dasturi',
       title: 'Reja',
       items: [
-        { time: '17:00', title: 'Mehmonlar qabuli' },
-        { time: '17:30', title: 'Tantana boshlanishi' },
-        { time: '20:15', title: "To'y valssi" },
-        { time: '21:30', title: "To'y torti" },
-        { time: '22:00', title: 'Tugatish' },
+        { time: '18:00', title: 'Mehmonlar qabuli' },
+        { time: '18:30', title: 'Tantana boshlanishi' },
+        { time: '21:15', title: "To'y valssi" },
+        { time: '22:30', title: "To'y torti" },
+        { time: '23:00', title: 'Tugatish' },
       ],
     },
     dresscode: {
@@ -176,8 +176,8 @@ export const translations: Record<Language, WeddingContent> = {
         "Pushti, shampan, sage va yumshoq neytral ranglar tavsiya etiladi. Bahor kayfiyatini aks ettiruvchi nozik kiyim kiyib kelishaniz so'raladi. Sizni tabassum va mehr bilan kutib olamiz.",
     },
     countdown: {
-      groomName: 'Aziz',
-      brideName: 'Laylo',
+      groomName: 'Ozodjon',
+      brideName: 'Aminabonu',
       untilLabel: "Ko'rishguncha",
       completedLabel: 'Bu kun keldi!',
       units: { days: 'kun', hours: 'soat', minutes: 'daqiqa', seconds: 'soniya' },

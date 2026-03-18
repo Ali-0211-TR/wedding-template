@@ -26,9 +26,6 @@ const VenueSection = lazy(
 const TimelineSection = lazy(
   () => import('./components/sections/TimelineSection'),
 )
-const DressCodeSection = lazy(
-  () => import('./components/sections/DressCodeSection'),
-)
 const CountdownSection = lazy(
   () => import('./components/sections/CountdownSection'),
 )
@@ -149,13 +146,6 @@ function App() {
           <Suspense fallback={<SectionFallback />}>
             <TimelineSection
               content={content.timeline}
-              reducedMotion={liteMode}
-            />
-          </Suspense>
-
-          <Suspense fallback={<SectionFallback />}>
-            <DressCodeSection
-              content={content.dresscode}
               reducedMotion={liteMode}
             />
           </Suspense>
