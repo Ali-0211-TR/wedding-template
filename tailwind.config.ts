@@ -13,8 +13,8 @@ export default {
         ink: '#3f2f38',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Cormorant Garamond', 'serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'serif'],
       },
       boxShadow: {
         soft: '0 18px 70px -30px rgba(101, 68, 82, 0.35)',

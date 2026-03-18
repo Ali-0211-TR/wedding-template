@@ -1,5 +1,19 @@
 import type { Metadata } from 'next'
+import { Cormorant_Garamond, Inter } from 'next/font/google'
 import './globals.css'
+
+const inter = Inter({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin', 'cyrillic'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-display',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Wedding Invitation',
@@ -12,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="uz">
+    <html lang="uz" className={`${inter.variable} ${cormorant.variable}`}>
       <body>{children}</body>
     </html>
   )

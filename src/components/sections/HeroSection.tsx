@@ -94,6 +94,7 @@ export default function HeroSection({
         className="glass-panel relative flex min-h-[88svh] flex-col items-center justify-center overflow-hidden px-6 py-14 text-center sm:min-h-[90svh] sm:px-10 sm:py-20"
         data-hero-backdrop
       >
+        {/* BACKGROUND */}
         <div className="cinematic-noise absolute inset-0 opacity-[0.12]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,rgba(255,255,255,0.7),transparent_55%)]" />
         <div className="absolute -left-12 -top-12 h-64 w-64 rounded-full bg-blush/40 blur-3xl" />
@@ -101,40 +102,51 @@ export default function HeroSection({
         <div className="absolute inset-x-[10%] top-12 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent" />
         <div className="absolute inset-x-[10%] bottom-14 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
 
+        {/* CONTENT */}
         <div className="relative z-10 flex flex-col items-center gap-8 sm:gap-10">
           <div data-hero-item>
             <RingsIcon />
           </div>
 
-          <div data-hero-item>
-            <h1 className="font-display text-6xl leading-none text-ink sm:text-8xl md:text-9xl lg:text-[8.5rem]">
-              {content.groomName}
-              <span className="mx-3 font-normal text-rose/60 sm:mx-5">&</span>
-              {content.brideName}
+          {/* FIXED NAMES BLOCK */}
+          <div data-hero-item className="max-w-[90vw] sm:max-w-3xl mx-auto">
+            <h1 className="font-display text-ink text-center flex flex-col items-center gap-2 sm:gap-4">
+              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight break-words">
+                {content.groomName}
+              </span>
+
+              <span className="text-rose/60 text-xl sm:text-2xl md:text-3xl tracking-[0.3em]">
+                &
+              </span>
+
+              <span className="block text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-tight break-words">
+                {content.brideName}
+              </span>
             </h1>
           </div>
 
           <div data-hero-item>
-            <p className="font-display text-xl italic tracking-widest text-ink/50 sm:text-2xl">
+            <p className="font-display text-lg sm:text-xl italic tracking-widest text-ink/50 sm:text-2xl">
               {content.weddingDay}
             </p>
           </div>
 
           <div data-hero-item>
-            <div className="rounded-full border border-white/55 bg-white/40 px-6 py-3 text-sm uppercase tracking-[0.36em] text-ink/65 shadow-soft backdrop-blur-xl sm:text-base">
+            <div className="rounded-full border border-white/55 bg-white/40 px-6 py-3 text-xs sm:text-sm uppercase tracking-[0.36em] text-ink/65 shadow-soft backdrop-blur-xl sm:text-base">
               {content.date}
             </div>
           </div>
 
           <div data-hero-item className="flex items-center gap-3 text-rose/40">
-            <span className="block h-px w-16 bg-rose/35" />
+            <span className="block h-px w-12 sm:w-16 bg-rose/35" />
             <svg viewBox="0 0 20 20" className="h-4 w-4" fill="currentColor" aria-hidden="true">
               <path d="M10 2 L11.8 7.2 H17.6 L12.9 10.4 L14.7 15.6 L10 12.4 L5.3 15.6 L7.1 10.4 L2.4 7.2 H8.2 Z" />
             </svg>
-            <span className="block h-px w-16 bg-rose/35" />
+            <span className="block h-px w-12 sm:w-16 bg-rose/35" />
           </div>
         </div>
 
+        {/* SCROLL BUTTON */}
         <motion.button
           type="button"
           onClick={onScrollNext}
@@ -144,6 +156,7 @@ export default function HeroSection({
           aria-label={content.scrollHint}
         >
           <span>{content.scrollHint}</span>
+
           <span className="flex h-10 w-6 items-start justify-center rounded-full border border-white/60 bg-white/30 px-1 pt-1 shadow-soft backdrop-blur-xl">
             <span className="h-2.5 w-2.5 rounded-full bg-ink/55" data-scroll-pill />
           </span>

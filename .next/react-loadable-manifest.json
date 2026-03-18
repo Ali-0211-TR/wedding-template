@@ -1,32 +1,32 @@
 {
   "App.tsx -> ./components/sections/CalendarSection": {
-    "id": 3959,
+    "id": "App.tsx -> ./components/sections/CalendarSection",
     "files": [
-      "static/chunks/959.0632563d22d01078.js"
+      "static/chunks/_app-pages-browser_src_components_sections_CalendarSection_tsx.js"
     ]
   },
   "App.tsx -> ./components/sections/CountdownSection": {
-    "id": 9131,
+    "id": "App.tsx -> ./components/sections/CountdownSection",
     "files": [
-      "static/chunks/131.f74cf02fea70511e.js"
+      "static/chunks/_app-pages-browser_src_components_sections_CountdownSection_tsx.js"
     ]
   },
   "App.tsx -> ./components/sections/InvitationSection": {
-    "id": 2890,
+    "id": "App.tsx -> ./components/sections/InvitationSection",
     "files": [
-      "static/chunks/890.eff4e5dd794e94f8.js"
+      "static/chunks/_app-pages-browser_src_components_sections_InvitationSection_tsx.js"
     ]
   },
   "App.tsx -> ./components/sections/TimelineSection": {
-    "id": 2466,
+    "id": "App.tsx -> ./components/sections/TimelineSection",
     "files": [
-      "static/chunks/466.81870083b1b14cbb.js"
+      "static/chunks/_app-pages-browser_src_components_sections_TimelineSection_tsx.js"
     ]
   },
   "App.tsx -> ./components/sections/VenueSection": {
-    "id": 8858,
+    "id": "App.tsx -> ./components/sections/VenueSection",
     "files": [
-      "static/chunks/858.8ad8426bc194b435.js"
+      "static/chunks/_app-pages-browser_src_components_sections_VenueSection_tsx.js"
     ]
   }
 }
