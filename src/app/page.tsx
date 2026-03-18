@@ -1,5 +1,14 @@
-import App from '../App'
+import { CmsInvitation } from '../components/CmsInvitation'
+import { getDefaultPage } from '../lib/cms-db'
+
+export const dynamic = 'force-dynamic'
 
 export default function Page() {
-  return <App />
+  const page = getDefaultPage()
+
+  if (!page) {
+    return null
+  }
+
+  return <CmsInvitation page={page} />
 }
