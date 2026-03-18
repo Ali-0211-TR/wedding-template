@@ -9,6 +9,9 @@ import type {
   CmsHeadingFont,
   CmsIconGlyph,
   CmsIconStyle,
+  CmsLandingStyle,
+  CmsSectionAnimationPreset,
+  CmsSectionAnimations,
   CmsTimelineStyle,
   CmsPage,
   CmsPageContent,
@@ -51,7 +54,17 @@ function defaultDesign(): CmsDesignSettings {
       countdown: 'heart',
     },
     animationPreset: 'soft',
+    sectionAnimations: {
+      hero: 'inherit',
+      invitation: 'inherit',
+      calendar: 'inherit',
+      venue: 'inherit',
+      timeline: 'inherit',
+      dresscode: 'inherit',
+      countdown: 'inherit',
+    },
     timelineStyle: 'classic',
+    landingStyle: 'classic',
   }
 }
 
@@ -115,6 +128,29 @@ function isTimelineStyle(value: unknown): value is CmsTimelineStyle {
   return value === 'classic' || value === 'steps' || value === 'glow'
 }
 
+function isLandingStyle(value: unknown): value is CmsLandingStyle {
+  return value === 'classic' || value === 'cinematic' || value === 'airy'
+}
+
+function isSectionAnimationPreset(value: unknown): value is CmsSectionAnimationPreset {
+  return value === 'inherit' || value === 'none' || value === 'fade-up' || value === 'zoom-in' || value === 'slide-left' || value === 'slide-right'
+}
+
+function normalizeSectionAnimations(
+  source: Partial<CmsSectionAnimations> | undefined,
+  fallback: CmsSectionAnimations,
+): CmsSectionAnimations {
+  return {
+    hero: isSectionAnimationPreset(source?.hero) ? source.hero : fallback.hero,
+    invitation: isSectionAnimationPreset(source?.invitation) ? source.invitation : fallback.invitation,
+    calendar: isSectionAnimationPreset(source?.calendar) ? source.calendar : fallback.calendar,
+    venue: isSectionAnimationPreset(source?.venue) ? source.venue : fallback.venue,
+    timeline: isSectionAnimationPreset(source?.timeline) ? source.timeline : fallback.timeline,
+    dresscode: isSectionAnimationPreset(source?.dresscode) ? source.dresscode : fallback.dresscode,
+    countdown: isSectionAnimationPreset(source?.countdown) ? source.countdown : fallback.countdown,
+  }
+}
+
 function normalizeContent(content: unknown): CmsPageContent {
   const fallback = defaultContent()
   const source = (content ?? {}) as Partial<CmsPageContent>
@@ -123,6 +159,7 @@ function normalizeContent(content: unknown): CmsPageContent {
     ? iconGlyphByStyle(sourceDesign.iconStyle)
     : fallback.design.sectionIcons.hero
   const sourceSectionIcons = (sourceDesign.sectionIcons ?? {}) as Partial<CmsDesignSettings['sectionIcons']>
+  const sourceSectionAnimations = (sourceDesign.sectionAnimations ?? {}) as Partial<CmsSectionAnimations>
 
   return {
     ...fallback,
@@ -154,9 +191,16 @@ function normalizeContent(content: unknown): CmsPageContent {
       animationPreset: isAnimationPreset(sourceDesign.animationPreset)
         ? sourceDesign.animationPreset
         : fallback.design.animationPreset,
+      sectionAnimations: normalizeSectionAnimations(
+        sourceSectionAnimations,
+        fallback.design.sectionAnimations,
+      ),
       timelineStyle: isTimelineStyle(sourceDesign.timelineStyle)
         ? sourceDesign.timelineStyle
         : fallback.design.timelineStyle,
+      landingStyle: isLandingStyle(sourceDesign.landingStyle)
+        ? sourceDesign.landingStyle
+        : fallback.design.landingStyle,
     },
     hero: {
       ...fallback.hero,

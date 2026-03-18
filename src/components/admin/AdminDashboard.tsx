@@ -9,6 +9,7 @@ import type {
   CmsHeadingFont,
   CmsIconGlyph,
   CmsIconStyle,
+  CmsLandingStyle,
   CmsPage,
   CmsPageSummary,
   CmsSectionKey,
@@ -36,6 +37,16 @@ const sectionIconLabels: Array<{ key: 'hero' | 'venue' | 'timeline' | 'countdown
   { key: 'hero', label: 'Hero' },
   { key: 'venue', label: 'Venue' },
   { key: 'timeline', label: 'Timeline' },
+  { key: 'countdown', label: 'Countdown' },
+]
+
+const sectionAnimationLabels: Array<{ key: CmsSectionKey; label: string }> = [
+  { key: 'hero', label: 'Hero' },
+  { key: 'invitation', label: 'Invitation' },
+  { key: 'calendar', label: 'Calendar' },
+  { key: 'venue', label: 'Venue' },
+  { key: 'timeline', label: 'Timeline' },
+  { key: 'dresscode', label: 'Dress code' },
   { key: 'countdown', label: 'Countdown' },
 ]
 
@@ -644,6 +655,59 @@ export function AdminDashboard({ initialPages }: AdminDashboardProps) {
                             <option value="glow">Glow — светящийся стиль</option>
                           </select>
                         </label>
+                        <label className="space-y-1">
+                          <span className="text-xs uppercase tracking-[0.2em] text-ink/65">Стиль лендинга (выбор)</span>
+                          <select
+                            value={selectedPage.content.design.landingStyle}
+                            onChange={(event) =>
+                              updateSelectedContent((content) => ({
+                                ...content,
+                                design: {
+                                  ...content.design,
+                                  landingStyle: event.target.value as CmsLandingStyle,
+                                },
+                              }))
+                            }
+                            className="w-full rounded-xl border border-ink/25 bg-white px-3 py-2"
+                          >
+                            <option value="classic">Classic — базовый нежный</option>
+                            <option value="cinematic">Cinematic — глубина и драматичность</option>
+                            <option value="airy">Airy — светлый, воздушный</option>
+                          </select>
+                        </label>
+                        <div className="space-y-2 rounded-xl border border-white/60 bg-white p-3 sm:col-span-2">
+                          <p className="text-xs uppercase tracking-[0.2em] text-ink/65">Анимация по секциям (выбор)</p>
+                          <div className="grid gap-3 sm:grid-cols-2">
+                            {sectionAnimationLabels.map((sectionAnimation) => (
+                              <label key={sectionAnimation.key} className="space-y-1">
+                                <span className="text-xs text-ink/70">{sectionAnimation.label}</span>
+                                <select
+                                  value={selectedPage.content.design.sectionAnimations[sectionAnimation.key]}
+                                  onChange={(event) =>
+                                    updateSelectedContent((content) => ({
+                                      ...content,
+                                      design: {
+                                        ...content.design,
+                                        sectionAnimations: {
+                                          ...content.design.sectionAnimations,
+                                          [sectionAnimation.key]: event.target.value,
+                                        },
+                                      },
+                                    }))
+                                  }
+                                  className="w-full rounded-xl border border-ink/25 bg-white px-3 py-2"
+                                >
+                                  <option value="inherit">Inherit (общий пресет)</option>
+                                  <option value="none">None</option>
+                                  <option value="fade-up">Fade up</option>
+                                  <option value="zoom-in">Zoom in</option>
+                                  <option value="slide-left">Slide left</option>
+                                  <option value="slide-right">Slide right</option>
+                                </select>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </section>
 

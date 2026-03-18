@@ -24,7 +24,9 @@ export type CmsBodyFont = 'sans' | 'serif' | 'display'
 export type CmsIconStyle = 'minimal' | 'hearts' | 'floral'
 export type CmsIconGlyph = 'dot' | 'heart' | 'flower' | 'ring' | 'sparkle'
 export type CmsAnimationPreset = 'soft' | 'cinematic' | 'none'
+export type CmsSectionAnimationPreset = 'inherit' | 'none' | 'fade-up' | 'zoom-in' | 'slide-left' | 'slide-right'
 export type CmsTimelineStyle = 'classic' | 'steps' | 'glow'
+export type CmsLandingStyle = 'classic' | 'cinematic' | 'airy'
 
 export interface CmsSectionIcons {
   hero: CmsIconGlyph
@@ -33,13 +35,17 @@ export interface CmsSectionIcons {
   countdown: CmsIconGlyph
 }
 
+export type CmsSectionAnimations = Record<CmsSectionKey, CmsSectionAnimationPreset>
+
 export interface CmsDesignSettings {
   headingFont: CmsHeadingFont
   bodyFont: CmsBodyFont
   iconStyle: CmsIconStyle
   sectionIcons: CmsSectionIcons
   animationPreset: CmsAnimationPreset
+  sectionAnimations: CmsSectionAnimations
   timelineStyle: CmsTimelineStyle
+  landingStyle: CmsLandingStyle
 }
 
 export interface CmsPageContent {

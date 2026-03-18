@@ -76,8 +76,55 @@ export function CmsInvitation({ page }: CmsInvitationProps) {
     design.animationPreset === 'none'
       ? ''
       : design.animationPreset === 'cinematic'
-        ? 'transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl'
-        : 'transition-all duration-300 hover:-translate-y-0.5'
+        ? 'cms-reveal-cinematic transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl'
+        : 'cms-reveal-soft transition-all duration-300 hover:-translate-y-0.5'
+
+  const sectionAnimationByKey = (section: keyof typeof sectionTitles) => {
+    const preset = design.sectionAnimations[section]
+
+    if (preset === 'none') {
+      return ''
+    }
+
+    if (preset === 'fade-up') {
+      return 'cms-reveal-soft transition-all duration-300 hover:-translate-y-0.5'
+    }
+
+    if (preset === 'zoom-in') {
+      return 'cms-reveal-zoom transition-all duration-500 hover:scale-[1.01]'
+    }
+
+    if (preset === 'slide-left') {
+      return 'cms-reveal-left transition-all duration-500'
+    }
+
+    if (preset === 'slide-right') {
+      return 'cms-reveal-right transition-all duration-500'
+    }
+
+    return sectionAnimationClass
+  }
+
+  const landingContainerClass =
+    design.landingStyle === 'cinematic'
+      ? 'relative'
+      : design.landingStyle === 'airy'
+        ? 'relative'
+        : 'relative'
+
+  const landingPanelClass =
+    design.landingStyle === 'cinematic'
+      ? `${theme.panelClassName} relative overflow-hidden border-white/40 bg-white/28`
+      : design.landingStyle === 'airy'
+        ? `${theme.panelClassName} border-white/70 bg-white/75`
+        : theme.panelClassName
+
+  const landingOrnamentClass =
+    design.landingStyle === 'cinematic'
+      ? 'cinematic-noise'
+      : design.landingStyle === 'airy'
+        ? 'cms-ornament-airy'
+        : ''
 
   const visibleSections = useMemo(
     () => page.layout.sectionOrder.filter((section) => !page.layout.hiddenSections.includes(section)),
@@ -107,17 +154,26 @@ export function CmsInvitation({ page }: CmsInvitationProps) {
   }, [])
 
   return (
-    <div className={`min-h-screen ${theme.pageClassName} ${bodyFontClass}`}>
-      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        {visibleSections.map((section) => {
+    <div className={`min-h-screen ${theme.pageClassName} ${bodyFontClass} ${landingContainerClass}`}>
+      {landingOrnamentClass ? <div className={`pointer-events-none fixed inset-0 z-0 ${landingOrnamentClass}`} /> : null}
+      <div className="relative z-10 mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+        {visibleSections.map((section, index) => {
+          const animationDelay = design.animationPreset === 'none' ? undefined : `${index * 110}ms`
+
+          const resolvedAnimationClass = sectionAnimationByKey(section)
+
           if (section === sectionTitles.hero) {
             return (
-              <section key={section} className={`mb-6 rounded-[2rem] px-6 py-12 text-center sm:px-10 sm:py-16 ${theme.panelClassName} ${sectionAnimationClass}`}>
+              <section
+                key={section}
+                className={`mb-6 rounded-[2rem] px-6 py-12 text-center sm:px-10 sm:py-16 ${landingPanelClass} ${resolvedAnimationClass}`}
+                style={animationDelay ? { animationDelay } : undefined}
+              >
                 <p className="text-xs uppercase tracking-[0.45em] opacity-65">{page.content.hero.weddingDay}</p>
-                <h1 className={`mt-5 text-6xl leading-none sm:text-8xl ${headingFontClass}`}>
-                  {page.content.hero.groomName}
-                  <span className={`mx-4 ${theme.accentClassName}`}>{heroIcon}</span>
-                  {page.content.hero.brideName}
+                <h1 className={`mt-5 text-[clamp(2.2rem,12vw,4.5rem)] leading-[1.05] sm:text-8xl ${headingFontClass}`}>
+                  <span className="block break-words">{page.content.hero.groomName}</span>
+                  <span className={`mx-2 inline-block align-middle text-[0.7em] sm:mx-4 ${theme.accentClassName}`}>{heroIcon}</span>
+                  <span className="block break-words sm:inline">{page.content.hero.brideName}</span>
                 </h1>
                 <p className="mt-6 text-sm uppercase tracking-[0.35em] opacity-75 sm:text-base">{page.content.hero.date}</p>
               </section>
@@ -126,7 +182,11 @@ export function CmsInvitation({ page }: CmsInvitationProps) {
 
           if (section === sectionTitles.invitation) {
             return (
-              <section key={section} className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${theme.panelClassName} ${sectionAnimationClass}`}>
+              <section
+                key={section}
+                className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${landingPanelClass} ${resolvedAnimationClass}`}
+                style={animationDelay ? { animationDelay } : undefined}
+              >
                 <p className="text-center text-xs uppercase tracking-[0.45em] opacity-65">{page.content.invitation.eyebrow}</p>
                 <h2 className={`mt-4 text-center text-4xl sm:text-5xl ${headingFontClass}`}>{page.content.invitation.title}</h2>
                 <div className="mx-auto mt-6 max-w-3xl space-y-4 text-center text-base leading-8 opacity-85 sm:text-lg">
@@ -140,7 +200,11 @@ export function CmsInvitation({ page }: CmsInvitationProps) {
 
           if (section === sectionTitles.calendar) {
             return (
-              <section key={section} className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${theme.panelClassName} ${sectionAnimationClass}`}>
+              <section
+                key={section}
+                className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${landingPanelClass} ${resolvedAnimationClass}`}
+                style={animationDelay ? { animationDelay } : undefined}
+              >
                 <p className="text-center text-xs uppercase tracking-[0.45em] opacity-65">{page.content.calendar.eyebrow}</p>
                 <h2 className={`mt-4 text-center text-4xl sm:text-5xl ${headingFontClass}`}>{page.content.calendar.title}</h2>
                 <div className="mx-auto mt-8 max-w-sm">
@@ -177,7 +241,11 @@ export function CmsInvitation({ page }: CmsInvitationProps) {
 
           if (section === sectionTitles.venue) {
             return (
-              <section key={section} className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${theme.panelClassName} ${sectionAnimationClass}`}>
+              <section
+                key={section}
+                className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${landingPanelClass} ${resolvedAnimationClass}`}
+                style={animationDelay ? { animationDelay } : undefined}
+              >
                 <p className="text-center text-xs uppercase tracking-[0.45em] opacity-65">{page.content.venue.eyebrow}</p>
                 <h2 className={`mt-4 text-center text-4xl sm:text-5xl ${headingFontClass}`}>
                   <span className={`mr-3 ${theme.accentClassName}`}>{venueIcon}</span>
@@ -201,7 +269,11 @@ export function CmsInvitation({ page }: CmsInvitationProps) {
 
           if (section === sectionTitles.timeline) {
             return (
-              <section key={section} className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${theme.panelClassName} ${sectionAnimationClass}`}>
+              <section
+                key={section}
+                className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${landingPanelClass} ${resolvedAnimationClass}`}
+                style={animationDelay ? { animationDelay } : undefined}
+              >
                 <p className="text-center text-xs uppercase tracking-[0.45em] opacity-65">{page.content.timeline.eyebrow}</p>
                 <h2 className={`mt-4 text-center text-4xl sm:text-5xl ${headingFontClass}`}>
                   <span className={`mr-3 ${theme.accentClassName}`}>{timelineIcon}</span>
@@ -269,7 +341,11 @@ export function CmsInvitation({ page }: CmsInvitationProps) {
 
           if (section === sectionTitles.dresscode) {
             return (
-              <section key={section} className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${theme.panelClassName} ${sectionAnimationClass}`}>
+              <section
+                key={section}
+                className={`mb-6 rounded-[2rem] px-6 py-10 sm:px-10 ${landingPanelClass} ${resolvedAnimationClass}`}
+                style={animationDelay ? { animationDelay } : undefined}
+              >
                 <p className="text-center text-xs uppercase tracking-[0.45em] opacity-65">{page.content.dresscode.eyebrow}</p>
                 <h2 className={`mt-4 text-center text-4xl sm:text-5xl ${headingFontClass}`}>{page.content.dresscode.code}</h2>
                 <p className="mx-auto mt-6 max-w-3xl text-center text-base leading-8 opacity-85 sm:text-lg">
@@ -280,11 +356,15 @@ export function CmsInvitation({ page }: CmsInvitationProps) {
           }
 
           return (
-            <section key={section} className={`mb-6 rounded-[2rem] px-6 py-10 text-center sm:px-10 ${theme.panelClassName} ${sectionAnimationClass}`}>
-              <h2 className={`text-5xl ${headingFontClass}`}>
-                {page.content.countdown.groomName}
-                <span className={`mx-4 ${theme.accentClassName}`}>{countdownIcon}</span>
-                {page.content.countdown.brideName}
+            <section
+              key={section}
+              className={`mb-6 rounded-[2rem] px-6 py-10 text-center sm:px-10 ${landingPanelClass} ${resolvedAnimationClass}`}
+              style={animationDelay ? { animationDelay } : undefined}
+            >
+              <h2 className={`text-[clamp(2rem,10vw,3.5rem)] leading-tight sm:text-5xl ${headingFontClass}`}>
+                <span className="block break-words">{page.content.countdown.groomName}</span>
+                <span className={`mx-2 inline-block align-middle text-[0.7em] sm:mx-4 ${theme.accentClassName}`}>{countdownIcon}</span>
+                <span className="block break-words sm:inline">{page.content.countdown.brideName}</span>
               </h2>
               <p className="mt-4 text-xs uppercase tracking-[0.45em] opacity-70">
                 {countdown.completed
