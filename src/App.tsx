@@ -17,21 +17,11 @@ import type { Language } from './data/content'
 import { SectionWrapper } from './components/SectionWrapper'
 import { FlowerDivider } from './components/FlowerDivider'
 
-const InvitationSection = lazy(
-  () => import('./components/sections/InvitationSection'),
-)
-const CalendarSection = lazy(
-  () => import('./components/sections/CalendarSection'),
-)
-const VenueSection = lazy(
-  () => import('./components/sections/VenueSection'),
-)
-const TimelineSection = lazy(
-  () => import('./components/sections/TimelineSection'),
-)
-const CountdownSection = lazy(
-  () => import('./components/sections/CountdownSection'),
-)
+const InvitationSection = lazy(() => import('./components/sections/InvitationSection'))
+const CalendarSection = lazy(() => import('./components/sections/CalendarSection'))
+const VenueSection = lazy(() => import('./components/sections/VenueSection'))
+const TimelineSection = lazy(() => import('./components/sections/TimelineSection'))
+const CountdownSection = lazy(() => import('./components/sections/CountdownSection'))
 
 function App() {
   const reducedMotion = usePrefersReducedMotion()
@@ -64,16 +54,12 @@ function App() {
     document.documentElement.lang = language
     document.title = content.meta.title
 
-    let description = document.querySelector<HTMLMetaElement>(
-      'meta[name="description"]',
-    )
-
+    let description = document.querySelector<HTMLMetaElement>('meta[name="description"]')
     if (!description) {
       description = document.createElement('meta')
       description.name = 'description'
       document.head.appendChild(description)
     }
-
     description.content = content.meta.description
   }, [content.meta.description, content.meta.title, language])
 
@@ -101,7 +87,7 @@ function App() {
         onComplete={handlePreloaderComplete}
       />
 
-      <div className="relative min-h-screen overflow-hidden">
+      <div className="relative min-h-[100dvh] overflow-hidden">
         <BackgroundDecor />
         <PetalField reducedMotion={liteMode} />
 
@@ -115,6 +101,7 @@ function App() {
 
         <main className="relative z-10">
           <AnimatePresence mode="wait">
+            {/* Hero — full screen */}
             <SectionWrapper key="hero" id="hero">
               <HeroSection
                 content={content.hero}
@@ -123,54 +110,54 @@ function App() {
               />
             </SectionWrapper>
 
+            {/* Invitation */}
             <SectionWrapper key="invitation" id="invitation" compact>
-              <FlowerDivider side="right" reducedMotion={liteMode} />
-              <Suspense fallback={<SectionFallback />}>
-                <InvitationSection
-                  content={content.invitation}
-                  reducedMotion={liteMode}
-                />
-              </Suspense>
+              <div className="relative mx-auto max-w-2xl px-4 sm:px-6">
+                <FlowerDivider side="right" reducedMotion={liteMode} />
+                <Suspense fallback={<SectionFallback />}>
+                  <InvitationSection content={content.invitation} reducedMotion={liteMode} />
+                </Suspense>
+              </div>
             </SectionWrapper>
 
+            {/* Calendar */}
             <SectionWrapper key="calendar" id="calendar" compact>
-              <FlowerDivider side="left" reducedMotion={liteMode} />
-              <Suspense fallback={<SectionFallback />}>
-                <CalendarSection
-                  content={content.calendar}
-                  reducedMotion={liteMode}
-                />
-              </Suspense>
+              <div className="relative mx-auto max-w-2xl px-4 sm:px-6">
+                <FlowerDivider side="left" reducedMotion={liteMode} />
+                <Suspense fallback={<SectionFallback />}>
+                  <CalendarSection content={content.calendar} reducedMotion={liteMode} />
+                </Suspense>
+              </div>
             </SectionWrapper>
 
+            {/* Venue */}
             <SectionWrapper key="venue" id="venue" compact>
-              <FlowerDivider side="right" reducedMotion={liteMode} />
-              <Suspense fallback={<SectionFallback />}>
-                <VenueSection
-                  content={content.venue}
-                  reducedMotion={liteMode}
-                />
-              </Suspense>
+              <div className="relative mx-auto max-w-2xl px-4 sm:px-6">
+                <FlowerDivider side="right" reducedMotion={liteMode} />
+                <Suspense fallback={<SectionFallback />}>
+                  <VenueSection content={content.venue} reducedMotion={liteMode} />
+                </Suspense>
+              </div>
             </SectionWrapper>
 
+            {/* Timeline */}
             <SectionWrapper key="timeline" id="timeline" compact>
-              <FlowerDivider side="left" reducedMotion={liteMode} />
-              <Suspense fallback={<SectionFallback />}>
-                <TimelineSection
-                  content={content.timeline}
-                  reducedMotion={liteMode}
-                />
-              </Suspense>
+              <div className="relative mx-auto max-w-2xl px-4 sm:px-6">
+                <FlowerDivider side="left" reducedMotion={liteMode} />
+                <Suspense fallback={<SectionFallback />}>
+                  <TimelineSection content={content.timeline} reducedMotion={liteMode} />
+                </Suspense>
+              </div>
             </SectionWrapper>
 
+            {/* Countdown */}
             <SectionWrapper key="countdown" id="countdown" compact>
-              <FlowerDivider side="right" reducedMotion={liteMode} />
-              <Suspense fallback={<SectionFallback />}>
-                <CountdownSection
-                  content={content.countdown}
-                  reducedMotion={liteMode}
-                />
-              </Suspense>
+              <div className="relative mx-auto max-w-2xl px-4 sm:px-6">
+                <FlowerDivider side="right" reducedMotion={liteMode} />
+                <Suspense fallback={<SectionFallback />}>
+                  <CountdownSection content={content.countdown} reducedMotion={liteMode} />
+                </Suspense>
+              </div>
             </SectionWrapper>
           </AnimatePresence>
         </main>

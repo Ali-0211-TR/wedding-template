@@ -63,7 +63,7 @@ export const translations: Record<Language, WeddingContent> = {
   ru: {
     meta: {
       title: 'Озоджон и Аминабону — Свадьба 3 апреля 2026',
-      description: 'Приглашение на свадьбу Озоджона и Аминабону, 3 апреля 2026, Ресторан Багишамал.',
+      description: 'Приглашение на свадьбу Озоджона и Аминабону, 3 апреля 2026, Ресторан Багишамал, Самарканд.',
     },
     controls: { musicOn: 'Музыка вкл.', musicOff: 'Музыка' },
     preloader: { label: 'Озоджон & Аминабону', sublabel: '3 апреля 2026' },
@@ -92,7 +92,7 @@ export const translations: Record<Language, WeddingContent> = {
     venue: {
       eyebrow: 'Место проведения',
       name: 'Ресторан Багишамал',
-      address: 'Ташкент',
+      address: 'Самарканд',
       openMap: 'Карта',
       note: 'Просим прибыть за 20 минут до начала',
     },
@@ -125,7 +125,7 @@ export const translations: Record<Language, WeddingContent> = {
   uz: {
     meta: {
       title: "Ozodjon va Aminabonu — To'y 3-aprel 2026",
-      description: "Ozodjon va Aminabonuning to'y taklifnomasi, 2026-yil 3-aprel, Restaran Bogishamol.",
+      description: "Ozodjon va Aminabonuning to'y taklifnomasi, 2026-yil 3-aprel, Restaran Bogishamol, Samarqand.",
     },
     controls: { musicOn: 'Musiqa yoq.', musicOff: 'Musiqa' },
     preloader: { label: 'Ozodjon & Aminabonu', sublabel: '2026-yil 3-aprel' },
@@ -154,7 +154,7 @@ export const translations: Record<Language, WeddingContent> = {
     venue: {
       eyebrow: 'Joyi',
       name: 'Restaran Bogishamol',
-      address: 'Toshkent',
+      address: 'Samarqand',
       openMap: 'Xarita',
       note: '20 daqiqa oldin tashrif buyuring',
     },

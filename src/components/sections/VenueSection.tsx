@@ -10,52 +10,43 @@ interface VenueSectionProps {
   reducedMotion: boolean
 }
 
-export default function VenueSection({
-  content,
-  reducedMotion,
-}: VenueSectionProps) {
+export default function VenueSection({ content, reducedMotion }: VenueSectionProps) {
   const sectionRef = useRef<HTMLElement | null>(null)
-  useSectionAnimations(sectionRef, reducedMotion, 0.09)
+  useSectionAnimations(sectionRef, reducedMotion, 0.1)
 
   return (
-    <section ref={sectionRef} id="venue" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 lg:py-10">
+    <section ref={sectionRef} className="mx-auto max-w-2xl px-4 py-3 sm:px-6 sm:py-4">
       <div className="section-shell relative overflow-hidden" data-section-shell>
-        <SectionPetals seedOffset={250} count={5} reducedMotion={reducedMotion} />
-        <div className="absolute -left-10 top-8 h-44 w-44 rounded-full bg-white/40 blur-3xl" data-glow />
-        <div className="absolute -right-8 bottom-6 h-36 w-36 rounded-full bg-blush/35 blur-3xl" data-glow />
+        <SectionPetals seedOffset={250} count={4} reducedMotion={reducedMotion} />
+        <div className="absolute -left-8 top-4 h-36 w-36 rounded-full bg-white/35 blur-3xl" data-glow />
+        <div className="absolute -right-6 bottom-4 h-28 w-28 rounded-full bg-blush/30 blur-3xl" data-glow />
 
-        <div className="relative z-10 mx-auto max-w-2xl space-y-6 text-center">
-          <div className="space-y-6">
-            <span className="eyebrow-pill" data-reveal>
-              {content.eyebrow}
-            </span>
+        <div className="section-content-frame relative z-10 space-y-5 text-center">
+          <span className="eyebrow-pill" data-reveal>{content.eyebrow}</span>
 
-            <div data-reveal>
-              <h2 className="section-title">{content.name}</h2>
-              <p className="mt-2 text-base text-ink/65 sm:text-lg">{content.address}</p>
-            </div>
+          <div data-reveal>
+            <h2 className="section-title">{content.name}</h2>
+            <p className="mt-1.5 text-sm text-ink/55 sm:text-base">{content.address}</p>
+          </div>
 
-            <p className="section-copy text-ink/60" data-reveal>
-              {content.note}
-            </p>
+          <p className="section-copy text-ink/55" data-reveal>{content.note}</p>
 
-            <div data-reveal>
-              <a
-                href={mapDirectionsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="ring-button inline-flex items-center gap-2"
-              >
-                <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden="true">
-                  <path
-                    fillRule="evenodd"
-                    d="M10 2a6 6 0 0 0-6 6c0 3.5 4.5 9.3 5.7 10.7a.4.4 0 0 0 .6 0C11.5 17.3 16 11.5 16 8a6 6 0 0 0-6-6zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                {content.openMap}
-              </a>
-            </div>
+          <div data-reveal>
+            <a
+              href={mapDirectionsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ring-button inline-flex items-center gap-1.5"
+            >
+              <svg viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+                <path
+                  fillRule="evenodd"
+                  d="M10 2a6 6 0 0 0-6 6c0 3.5 4.5 9.3 5.7 10.7a.4.4 0 0 0 .6 0C11.5 17.3 16 11.5 16 8a6 6 0 0 0-6-6zm0 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              {content.openMap}
+            </a>
           </div>
         </div>
       </div>

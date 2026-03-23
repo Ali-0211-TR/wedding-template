@@ -18,6 +18,9 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: 'Wedding Invitation',
   description: 'Cinematic wedding invitation',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({

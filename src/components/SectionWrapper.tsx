@@ -11,11 +11,11 @@ export function SectionWrapper({ children, id, compact = false }: SectionWrapper
   return (
     <motion.section
       id={id}
-      className={`relative w-full flex items-center justify-center ${compact ? 'py-10 sm:py-14' : 'min-h-screen'}`}
-      initial={{ opacity: 0, y: 50 }}
+      className={`relative w-full ${compact ? 'py-3 sm:py-5' : 'min-h-[100svh] flex items-center justify-center'}`}
+      initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -50 }}
-      transition={{ duration: 0.8, ease: 'easeInOut' }}
+      exit={{ opacity: 0, y: -40 }}
+      transition={{ duration: 0.7, ease: 'easeInOut' }}
     >
       {children}
     </motion.section>

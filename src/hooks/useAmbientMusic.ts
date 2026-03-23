@@ -1,135 +1,135 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-interface AudioNodes {
-  oscillators: OscillatorNode[]
-  lfo: OscillatorNode | null
-  master: GainNode | null
-  lfoGain: GainNode | null
-}
+/* ── env-based config ────────────────────────────────── */
+const AUTOPLAY =
+  (process.env.NEXT_PUBLIC_MUSIC_AUTOPLAY ?? 'true').toLowerCase() === 'true'
+const VOLUME = Math.min(
+  1,
+  Math.max(0, parseFloat(process.env.NEXT_PUBLIC_MUSIC_VOLUME ?? '0.35')),
+)
 
+/**
+ * Ambient music hook — plays an actual audio file.
+ * Uses HTMLAudioElement for maximum mobile compatibility.
+ *
+ * When `NEXT_PUBLIC_MUSIC_AUTOPLAY=true` (default), the hook
+ * will start playing automatically on the first user interaction
+ * (click/tap/scroll) because mobile browsers block autoplay
+ * without a gesture.
+ */
 export function useAmbientMusic() {
   const [isPlaying, setIsPlaying] = useState(false)
-  const contextRef = useRef<AudioContext | null>(null)
-  const nodesRef = useRef<AudioNodes>({
-    oscillators: [],
-    lfo: null,
-    master: null,
-    lfoGain: null,
-  })
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const isPlayingRef = useRef(false)
+  const pendingAutoplayRef = useRef(AUTOPLAY)
+  const autoplayBoundRef = useRef(false)
 
-  const stop = useCallback(async () => {
-    const nodes = nodesRef.current
+  // Keep ref in sync for the event listener closure
+  useEffect(() => {
+    isPlayingRef.current = isPlaying
+  }, [isPlaying])
 
-    nodes.oscillators.forEach((oscillator) => {
-      try {
-        oscillator.stop()
-      } catch {
-        // ignored
+  // Create audio element lazily
+  const getAudio = useCallback(() => {
+    if (audioRef.current) return audioRef.current
+
+    const audio = new Audio('/audio/template-music.mp3')
+    audio.loop = true
+    audio.volume = VOLUME
+    audio.preload = 'auto'
+
+    // Handle external interruptions (phone call, etc.)
+    audio.addEventListener('pause', () => {
+      if (isPlayingRef.current && audio.paused) {
+        setIsPlaying(false)
+        isPlayingRef.current = false
       }
     })
 
-    if (nodes.lfo) {
-      try {
-        nodes.lfo.stop()
-      } catch {
-        // ignored
-      }
-    }
-
-    nodesRef.current = {
-      oscillators: [],
-      lfo: null,
-      master: null,
-      lfoGain: null,
-    }
-
-    if (contextRef.current) {
-      await contextRef.current.close()
-      contextRef.current = null
-    }
-
-    setIsPlaying(false)
+    audioRef.current = audio
+    return audio
   }, [])
 
   const start = useCallback(async () => {
-    if (contextRef.current) {
-      return
+    const audio = getAudio()
+
+    try {
+      await audio.play()
+      setIsPlaying(true)
+      pendingAutoplayRef.current = false
+    } catch {
+      // Retry once — some Android browsers need a micro-delay
+      setTimeout(async () => {
+        try {
+          await audio.play()
+          setIsPlaying(true)
+          pendingAutoplayRef.current = false
+        } catch {
+          // silently give up
+        }
+      }, 100)
     }
+  }, [getAudio])
 
-    const AudioContextClass = window.AudioContext
-    if (!AudioContextClass) {
-      return
+  const stop = useCallback(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    pendingAutoplayRef.current = false // user explicitly turned off
+
+    // Smooth fade-out via requestAnimationFrame
+    const fadeOut = () => {
+      if (audio.volume > 0.02) {
+        audio.volume = Math.max(0, audio.volume - 0.04)
+        requestAnimationFrame(fadeOut)
+      } else {
+        audio.pause()
+        audio.volume = VOLUME
+        audio.currentTime = 0
+        setIsPlaying(false)
+      }
     }
-
-    const context = new AudioContextClass()
-    contextRef.current = context
-
-    if (context.state === 'suspended') {
-      await context.resume()
-    }
-
-    const filter = context.createBiquadFilter()
-    filter.type = 'lowpass'
-    filter.frequency.value = 1450
-    filter.Q.value = 0.4
-
-    const master = context.createGain()
-    master.gain.value = 0.016
-
-    const lfo = context.createOscillator()
-    lfo.type = 'sine'
-    lfo.frequency.value = 0.09
-
-    const lfoGain = context.createGain()
-    lfoGain.gain.value = 0.008
-
-    lfo.connect(lfoGain)
-    lfoGain.connect(master.gain)
-
-    const chord = [220, 277.18, 329.63]
-    const oscillators = chord.map((frequency, index) => {
-      const oscillator = context.createOscillator()
-      oscillator.type = index === 1 ? 'triangle' : 'sine'
-      oscillator.frequency.value = frequency
-      oscillator.detune.value = index * 4
-
-      const gain = context.createGain()
-      gain.gain.value = 0.004 / (index + 1)
-      oscillator.connect(gain)
-      gain.connect(filter)
-      oscillator.start()
-
-      return oscillator
-    })
-
-    filter.connect(master)
-    master.connect(context.destination)
-    lfo.start()
-
-    nodesRef.current = {
-      oscillators,
-      lfo,
-      master,
-      lfoGain,
-    }
-
-    setIsPlaying(true)
+    fadeOut()
   }, [])
 
   const toggle = useCallback(async () => {
-    if (isPlaying) {
-      await stop()
-      return
-    }
-
-    await start()
+    if (isPlaying) stop()
+    else await start()
   }, [isPlaying, start, stop])
 
+  /* ── Autoplay on first user gesture ────────────────── */
+  useEffect(() => {
+    if (!AUTOPLAY || autoplayBoundRef.current) return
+    autoplayBoundRef.current = true
+
+    const handler = () => {
+      if (!pendingAutoplayRef.current) return
+      // Remove listeners immediately so we don't re-trigger
+      cleanup()
+      void start()
+    }
+
+    const events = ['click', 'touchstart', 'scroll', 'keydown'] as const
+    events.forEach((e) => window.addEventListener(e, handler, { once: false, passive: true }))
+
+    function cleanup() {
+      events.forEach((e) => window.removeEventListener(e, handler))
+    }
+
+    return cleanup
+  }, [start])
+
+  // Cleanup on unmount
   useEffect(() => {
     return () => {
-      void stop()
+      const audio = audioRef.current
+      if (audio) {
+        audio.pause()
+        audio.src = ''
+        audioRef.current = null
+      }
     }
-  }, [stop])
+  }, [])
 
   return { isPlaying, toggle }
 }
